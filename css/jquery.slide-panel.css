@@ -6,12 +6,21 @@
 }
 .slide-panel.inserted{
     display: block;
-    -webkit-transition: bottom 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
-    -moz-transition: bottom 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
-    -ms-transition: bottom 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
-    -o-transition: bottom 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
+
+}
+.slide-panel.inserted.top{
+    transition: top 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
+}
+.slide-panel.inserted.right {
+    transition: right 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
+}
+.slide-panel.inserted.bottom {
     transition: bottom 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
 }
+.slide-panel.inserted.left {
+    transition: left 0.25s cubic-bezier(0.15, 0.06, 0.05, 0.95);
+}
+
 
 .slide-panel .header{
     position: relative;

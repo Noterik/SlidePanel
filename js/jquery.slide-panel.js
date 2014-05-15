@@ -142,6 +142,11 @@ SlidePanel.prototype.context = null;
  */
 SlidePanel.prototype.open = false;
 /**
+ * The close button that will trigger the hiding of the SlidePanel
+ * @type {HTMLElement}
+ */
+SlidePanel.prototype.closeButton = null;
+/**
  * Slides the SlidePanel into the users viewport. Resolves once the animation has finished.
  * @return {Promise}
  */
@@ -188,6 +193,7 @@ SlidePanel.prototype._createPanel = function(){
     }
     this.element.append(this.content);
     this.element.height(this.height);
+    this._handleCloseButton();
     this._handleTitle();
     this._listenToClose();
 };
@@ -202,6 +208,7 @@ SlidePanel.prototype._insertPanel = function(){
     this.inserted = true;
     setTimeout(function(){
         self.element.addClass('inserted');
+        self.element.addClass(self.placement);
         self.element.css(self.placement, 0);
     }, 1);
 
@@ -224,6 +231,20 @@ SlidePanel.prototype._handleHeight = function(){
     }
 };
 /**
+ * If a custom close button is defined, use that one instead of the default one.
+ * @private
+ */
+SlidePanel.prototype._handleCloseButton = function(){
+    var defaultCloseButton = this.element.find('button.slide-away');
+    var possibleCloseButton = this.element.find('button[data-popup-close]');
+    if(possibleCloseButton.length){
+        this.closeButton = possibleCloseButton
+        defaultCloseButton.remove();
+    }else{
+        this.closeButton = defaultCloseButton;
+    }
+};
+/**
  * Starts listening to the triggering element. If its clicked, show the slide panel.
  * @private
  */
@@ -239,7 +260,7 @@ SlidePanel.prototype._listenToTrigger = function(){
  */
 SlidePanel.prototype._listenToClose = function(){
     var self = this;
-    this.element.find('button.slide-away').on('click', function(){
+    this.closeButton.on('click', function(){
         self.hide.apply(self);
     });
 };
@@ -248,7 +269,11 @@ SlidePanel.prototype._listenToClose = function(){
  * @private
  */
 SlidePanel.prototype._handleTitle = function(){
-  this.element.find('.title').text(this.title);
+  if(this.title){
+      this.element.find('.title').text(this.title);
+  }else{
+      this.element.find('title').remove();
+  }
 };
 
 /**
